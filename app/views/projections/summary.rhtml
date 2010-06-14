@@ -1,0 +1,32 @@
+<h1>Summary</h1>
+
+<%= start_form_tag :action => 'start_value'%>
+  Start value: <input type="text" name="start_value" value="<%= @start_value %>" size="10" />
+  <%= submit_tag 'Change' %>
+<%= end_form_tag %>
+
+<table>
+  <tr>
+    <th>Month</th>
+    <th>Value</th>
+    <th>Sum</th>
+  </tr>
+  
+<% for month in @months %>
+  <tr>
+    <td><%= month.date.strftime("%B") %></td>
+	<% if month.value < 0 %>
+    	<td align="right"><span style="color: red"><%= month.value %></span></td>
+	<% else %>
+		<td align="right"><span style="color: green"><%= month.value %></span></td>
+	<% end %>
+
+	<% if month.sum < 0 %>
+		<td align="right"><span style="color: red"><strong><%= month.sum %><strong></span></td>
+	<% else %>
+		<td align="right"><span style="color: black"><strong><%= month.sum %></strong></span></td>
+	<% end %>
+  </tr>
+<% end %>
+
+</table>

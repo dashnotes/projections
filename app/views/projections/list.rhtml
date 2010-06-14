@@ -1,0 +1,47 @@
+<h1>Projections</h1>
+
+<% form_for(@projection, :url => start_value_projections_path) do |f|%>
+
+  Start value: <input type="text" name="start_value" value="<%= @start_value %>" size="10" />
+  <%= submit_tag 'Change' %>
+<%end %>
+
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Description</th>
+    <th>Value</th>
+    <th>Sum</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+  
+<% for projection in @projections %>
+  <tr>
+    <td><%= projection.date.strftime("%Y-%m-%d") %></td>
+    <td><%= projection.description %></td>
+	<% if projection.value < 0 %>
+    	<td align="right"><span style="color: red"><%= projection.value %></span></td>
+	<% else %>
+		<td align="right"><span style="color: green"><%= projection.value %></span></td>
+	<% end %>
+
+	<% if projection.sum < 0 %>
+		<td align="right"><span style="color: red"><strong><%= projection.sum %><strong></span></td>
+	<% else %>
+		<td align="right"><span style="color: black"><strong><%= projection.sum %></strong></span></td>
+	<% end %>
+
+    <td><%= link_to 'Edit', :action => 'edit', :id => projection %></td>
+    <td><%= link_to 'Remove', projection_path(projection), :method => :delete, :confirm => 'Are you sure?' %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% form_for(@projection) do |f|%>
+  <%= render :partial => 'form' %>
+  <%= submit_tag "Create" %>
+<% end %>
